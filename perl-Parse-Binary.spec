@@ -1,19 +1,18 @@
 %define upstream_name    Parse-Binary
 %define upstream_version 0.11
 
-Name:       perl-%{upstream_name}
-Version:    %perl_convert_version %{upstream_version}
-Release:    %mkrel 2
+Name:		perl-%{upstream_name}
+Version:	%perl_convert_version %{upstream_version}
+Release:	3
 
-Summary:    Convert between variant records and hashes
-License:    GPL+ or Artistic
-Group:      Development/Perl
-Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Parse/%{upstream_name}-%{upstream_version}.tar.gz
+Summary:	Convert between variant records and hashes
+License:	GPL+ or Artistic
+Group:		Development/Perl
+Url:		http://search.cpan.org/dist/%{upstream_name}
+Source0:	http://www.cpan.org/modules/by-module/Parse/%{upstream_name}-%{upstream_version}.tar.gz
 
-
-BuildArch: noarch
-BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}
+BuildRequires:	perl-devel
+BuildArch:	noarch
 
 %description
 This module makes parsing binary data structures much easier, by serving as
@@ -28,23 +27,30 @@ manpage for examples of using this module.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make
 
 %check
 make test
 
 %install
-rm -rf %buildroot
 %makeinstall_std
 
-%clean
-rm -rf %buildroot
-
 %files
-%defattr(-,root,root)
 %doc Changes README
 %{_mandir}/man3/*
-%perl_vendorlib/*
+%{perl_vendorlib}/*
 
+%changelog
+* Mon Apr 25 2011 Funda Wang <fwang@mandriva.org> 0.110.0-2mdv2011.0
++ Revision: 658872
+- rebuild for updated spec-helper
+
+* Sun May 31 2009 Jérôme Quelin <jquelin@mandriva.org> 0.110.0-1mdv2010.0
++ Revision: 381686
+- import perl-Parse-Binary
+
+
+* Sun May 31 2009 cpan2dist 0.11-1mdv
+- initial mdv release, generated with cpan2dist
 
